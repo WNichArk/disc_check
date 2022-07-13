@@ -11,13 +11,15 @@ def get_users():
 
 def run():
     add_user()
-    objs = data_agg.get_records()
+    records = data_agg.get_records()
     users = get_users()
     print("Current users: ")
     for u in users:
+        print(u['Name'])
+    for u in users:
         print(u)
-    for obj in obj:
-        if obj.name
+        dd = [i for i in records if u["Name"] in records["name"]]
+        print(dd)
 
 def add_user(rec = False):
     if not rec:
