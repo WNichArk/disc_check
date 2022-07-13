@@ -5,8 +5,6 @@ import constants.constants as cs
 class database():
 
     def get_database(self, db_name):
-        import pymongo
-        from pymongo import MongoClient
 
         try:
             client = MongoClient(cs.CONNECTION_STRING)
