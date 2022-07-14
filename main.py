@@ -1,25 +1,30 @@
+from collections import UserList
 from mongoimpl import database
 import data_agg
+from match import Match
+from munch import DefaultMunch
 
 db = database().get_database('disc-check')
-users = db["users"]
+dbusers = db["users"]
 
 
 def get_users():
-    retval = users.find({})
+    retval = dbusers.find({})
     return list(retval)
 
 def run():
     add_user()
     records = data_agg.get_records()
     users = get_users()
-    print("Current users: ")
+    found = []
     for u in users:
-        print(u['Name'])
-    for u in users:
-        print(u)
-        dd = [i for i in records if u["Name"] in records["name"]]
-        print(dd)
+        u = DefaultMunch.fromDict(u)
+        addl = [r for r in records if r.name.lower() == u["Name"].lower()]
+        if any(addl):
+            for a in addl:
+                found.append(Match(u, a))
+    for f in found:
+        print(f.user.Name + " " + f.user.Email + " " + f.record.color.strip() + " " + f.record.disc.strip())
 
 def add_user(rec = False):
     if not rec:
