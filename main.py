@@ -24,16 +24,17 @@ def run():
             for a in addl:
                 found.append(Match(u, a))
     for f in found:
-        print(f.user.Name + " " + f.user.Email + " " + f.record.color.strip() + " " + f.record.disc.strip())
+        print(f'Found: {f.user.Name} {f.user.Email} Disc: {f.record.color.strip()} {f.record.disc.strip()}')
 
 def add_user(rec = False):
     if not rec:
         add = input("Would you like to add a user? ")
+        print()
     if rec or add.lower() == "y":
         name = input("Name: ")
         email = input("Email: ")
         newuser = {"Name": name, "Email": email}
-        users.insert_one(newuser)
+        dbusers.insert_one(newuser)
         print("User added.")
         cont = input("Add another? ")
         if cont.lower() == 'y':

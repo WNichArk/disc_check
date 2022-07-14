@@ -8,7 +8,10 @@ class database():
 
         try:
             client = MongoClient(cs.CONNECTION_STRING)
+            print("............................")
             print("Mongo connection established.")
+            print("............................")
+            print()
         except:
             print("Mongo connection failed")
 
