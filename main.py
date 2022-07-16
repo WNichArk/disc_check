@@ -3,6 +3,7 @@ from mongoimpl import database
 import data_agg
 from match import Match
 from munch import DefaultMunch
+from email_client import send_message
 
 db = database().get_database('disc-check')
 dbusers = db["users"]
@@ -24,7 +25,9 @@ def run():
             for a in addl:
                 found.append(Match(u, a))
     for f in found:
-        print(f'Found: {f.user.Name} {f.user.Email} Disc: {f.record.color.strip()} {f.record.disc.strip()}')
+        messages = f'Found: {f.user.Name} Disc: {f.record.color.strip()} {f.record.disc.strip()} \n'
+        send_message("", f'Found Disc Alert: {f.record.color.strip()} {f.record.disc.strip()}', messages)
+    #print(str(messages))
 
 def add_user(rec = False):
     if not rec:
